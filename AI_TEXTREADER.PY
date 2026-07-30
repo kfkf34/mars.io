@@ -1,3 +1,5 @@
+#REQUIRED TO RUN:
+# python -m piper.download_voices en_US-lessac-high.onnx
 
 from PIL import Image,ImageEnhance
 import pytesseract
@@ -9,6 +11,7 @@ import cv2
 import numpy as np
 #from playsound import playsound
 #pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+
 img = cv2.resize(cv2.imread("look.jpg"), None, fx=2, fy=2)
 cv2.imwrite("resized_image.jpg", img)
 text = Image.open("resized_image.jpg")
