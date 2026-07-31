@@ -9,6 +9,13 @@ import wave
 from piper import PiperVoice
 import cv2
 import numpy as np
+from flask import Flask
+app = Flask (__name__)
+@app.route("/")
+def home ():
+    return "<h1>Hello,Render!</h1>"
+if __name__=="__main__":
+    app.run()
 #from playsound import playsound
 #pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
@@ -46,13 +53,24 @@ with wave.open("text.wav","wb") as f:
     voice.synthesize_wav(home,f)
 #playsound("text.wav")
 
+cam = cv2.VideoCapture(0)
+frame_width = int(cam.get(cv2.CAP_PROP_FRAME_WIDTH))
+frame_height = int(cam.get(cv2.CAP_PROP_FRAME_HEIGHT))
+fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+out = cv2.VideoWriter('output.mp4', fourcc, 20.0, (frame_width, frame_height))
+while True:
+    ret, frame = cam.read()
+    out.write(frame)
+    cv2.imshow('Camera', frame)
+    if cv2.waitKey(1) == ord('q'):
+        break
+cam.release()
+out.release()
+cv2.destroyAllWindows()
 
 
 
-
-
-
-
+pip freeze > requirements.txt
 
 
 
